@@ -16,7 +16,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: localhost:5000/new/html
+      - image: localhost:5000/html
         imagePullPolicy: Always
         name: myweb
 
