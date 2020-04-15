@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    registry = "localhost:5000/myweb"
+    registry = "localhost:5000/new/html"
     dockerImage = ""
   }
 
@@ -18,7 +18,7 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build -t registry + ":$BUILD_NUMBER"
         }
       }
     }
