@@ -1,40 +1,19 @@
 pipeline {
 
-  ##environment {
-  ##  registry = "localhost:5000/new/html"
-  ##  dockerImage = ""
-  ##}
-
-  agent any
+  agent { label 'kubepod' }
 
   stages {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/irla2/playjenkins.git'
-      }
-    }
-
-    stage('Build image') {
-      steps{
-        script {
-          docker image build -t localhost:5000/html:1.0 .
-        }
-      }
-    }
-
-    stage('Push Image') {
-      steps{
-        script {
-          docker push localhost:5000/html:1.0 
-        }
+        git url:'https://github.com/justmeandopensource/playjenkins.git', branch:'test-deploy-stage'
       }
     }
 
     stage('Deploy App') {
       steps {
         script {
-          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+          kubernetesDeploy(configs: "nginx.yaml", kubeconfigId: "mykubeconfig")
         }
       }
     }
@@ -42,3 +21,4 @@ pipeline {
   }
 
 }
+
